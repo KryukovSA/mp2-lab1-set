@@ -26,3 +26,6 @@
 *.exe
 *.out
 *.app
+/sln/vc10/.vs/bitfield/v15/Solution.VC.db-wal
+/sln/vc10/.vs/bitfield/v15/Solution.VC.db-shm
+/sln/vc10/.vs/bitfield/v15/Browse.VC.opendb
