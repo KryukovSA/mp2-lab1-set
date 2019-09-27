@@ -80,14 +80,16 @@ int TBitField::GetBit(const int n) const // получить значение б
 
 TBitField& TBitField::operator=(const TBitField &bf) // присваивание
 {
-	MemLen = bf.MemLen;
-	BitLen = bf.BitLen;
-	pMem = new TELEM[MemLen]();
-	for (int i = 0; i < BitLen; i++) 
-		if (bf.GetBit(i)) 
-			SetBit(i);
-		
-	
+	if (this != &bf)
+	{
+		MemLen = bf.MemLen;
+		BitLen = bf.BitLen;
+		pMem = new TELEM[MemLen]();
+		for (int i = 0; i < BitLen; i++)
+			if (bf.GetBit(i))
+				SetBit(i);
+
+	}
 	return *this;
 }
 
@@ -108,9 +110,13 @@ int TBitField::operator!=(const TBitField &bf) const // сравнение
 	if (BitLen != bf.BitLen) {
 		return true;
 	}
-	for (int i = 0; i < BitLen; i++) {
-		if (GetBit(i) != bf.GetBit(i)) {
-			return true;
+	else
+	{
+		for (int i = 0; i < BitLen; i++) {
+			if (GetBit(i) == bf.GetBit(i)) {
+				return true;
+				break;
+			}
 		}
 	}
 	return false;
@@ -167,7 +173,10 @@ istream &operator>>(istream &istr, TBitField &bf) // ввод
 ostream &operator<<(ostream &ostr, const TBitField &bf) // вывод
 {
 	for (int i = 0; i < bf.MemLen; ++i)
-		ostr << bf.pMem[i] << " ";
+		if (bf.GetBit(i) == 1)
+			ostr << 1 << " ";
+		else
+			ostr << 0 << " ";
 	ostr << bf.BitLen << bf.MemLen << " ";
 	ostr << endl;
 	return ostr;
